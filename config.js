@@ -11,7 +11,7 @@ const CONFIG = {
   LIFF_ID: '2008305167-2KLWjA7J', // แทนที่ด้วย LIFF ID ของคุณ 
   
   // Backend Configuration
-  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbwP1unVjCIrmb8UfMfjgHmGVVJ6k00ZS01pmpZVtG1k4EEPtCYMn-Mc0BakROSvToYR/exec',
+  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbzPFolmPFiGqFH8g2E3VhyKbPuZ8H0VQrzTc9xjSZHnu9E3rUyb1v9nD8kdNrtSIzkH/exec',
   API_SECRET_KEY: 'MySecretKey123!@#', // เพิ่ม API Key ถ้าใช้ใน Backend
   
   // App Settings
