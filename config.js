@@ -8,7 +8,7 @@
 // Main Configuration
 const CONFIG = {
   // LIFF Configuration
-  LIFF_ID: '2008305167-2KLWjA7J', // แทนที่ด้วย LIFF ID ของคุณ 
+  LIFF_ID: '2008315151-QEwrGORr', // แทนที่ด้วย LIFF ID ของคุณ 
   
   // Backend Configuration
   GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbzPFolmPFiGqFH8g2E3VhyKbPuZ8H0VQrzTc9xjSZHnu9E3rUyb1v9nD8kdNrtSIzkH/exec',
