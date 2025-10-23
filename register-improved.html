@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ลงทะเบียนพนักงาน - BigC</title>
+  <title>ลงทะเบียน - BigC v3 (CORS-Free)</title>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -14,541 +14,315 @@
     
     body {
       font-family: 'Kanit', sans-serif;
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      min-height: 100vh; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       padding: 20px;
     }
     
     .container {
-      max-width: 600px;
+      max-width: 400px;
       margin: 0 auto;
       background: white;
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
+      padding: 30px;
     }
     
     .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 30px;
       text-align: center;
-      color: white;
+      margin-bottom: 30px;
     }
     
-    .header h1 {
-      font-size: 28px;
+    .title {
+      font-size: 24px;
       font-weight: 700;
+      color: #2c3e50;
       margin-bottom: 10px;
     }
     
-    .header p {
+    .subtitle {
       font-size: 16px;
-      opacity: 0.9;
+      color: #7f8c8d;
     }
     
-    .form-container {
-      padding: 40px 30px;
-    }
-    
-    .user-info {
-      background: #f8f9ff;
-      border: 1px solid #e6e8ff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 30px;
+    .cors-info {
+      background: #e8f5e8;
+      border: 1px solid #27ae60;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: #155724;
       text-align: center;
     }
     
-    .user-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin: 0 auto 15px;
-      background: linear-gradient(135deg, #06C755, #04b049);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    
-    .user-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 5px;
-    }
-    
-    .user-id {
-      font-size: 14px;
-      color: #718096;
-      font-family: monospace;
-    }
-    
     .form-group {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
     
     .form-label {
       display: block;
-      font-size: 16px;
-      font-weight: 600;
-      color: #2d3748;
       margin-bottom: 8px;
-    }
-    
-    .form-label.required::after {
-      content: ' *';
-      color: #e53e3e;
+      color: #2c3e50;
+      font-weight: 500;
     }
     
     .form-input {
       width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
+      padding: 15px;
+      border: 2px solid #e1e8ed;
+      border-radius: 10px;
       font-size: 16px;
+      transition: border-color 0.3s ease;
       font-family: 'Kanit', sans-serif;
-      transition: all 0.3s ease;
-      background: white;
     }
     
     .form-input:focus {
       outline: none;
       border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
     
     .form-input.error {
-      border-color: #e53e3e;
-      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+      border-color: #e74c3c;
     }
     
-    .form-select {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 16px;
-      font-family: 'Kanit', sans-serif;
-      background: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .form-select:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-    
-    .field-hint {
-      font-size: 13px;
-      color: #718096;
-      margin-top: 5px;
-    }
-    
-    .field-error {
-      font-size: 13px;
-      color: #e53e3e;
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
       margin-top: 5px;
       display: none;
     }
     
-    .submit-btn {
+    .btn {
       width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #06C755, #04b049);
-      color: white;
+      padding: 15px;
       border: none;
-      border-radius: 12px;
-      font-size: 18px;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: 600;
-      font-family: 'Kanit', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 20px;
+      font-family: 'Kanit', sans-serif;
     }
     
-    .submit-btn:hover:not(:disabled) {
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    
+    .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(6, 199, 85, 0.3);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
     
-    .submit-btn:disabled {
-      background: #cbd5e0;
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #6c757d;
+      margin-top: 10px;
+    }
+    
+    .btn-secondary:hover {
+      background: #e9ecef;
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+      transform: none !important;
     }
     
-    .message {
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-weight: 500;
-    }
-    
-    .message-success {
-      background: #f0fff4;
-      border: 1px solid #9ae6b4;
-      color: #22543d;
-    }
-    
-    .message-error {
-      background: #fed7d7;
-      border: 1px solid #feb2b2;
-      color: #c53030;
-    }
-    
-    .message-info {
-      background: #ebf8ff;
-      border: 1px solid #90cdf4;
-      color: #2a69ac;
-    }
-    
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: #a0aec0;
-      background: #f7fafc;
-    }
-    
-    @media (max-width: 480px) {
-      .container {
-        margin: 10px;
-        border-radius: 15px;
-      }
-      
-      .header {
-        padding: 25px 20px;
-      }
-      
-      .header h1 {
-        font-size: 24px;
-      }
-      
-      .form-container {
-        padding: 30px 20px;
-      }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
+  <button class="back-btn" onclick="history.back()">←</button>
+  
   <div class="container">
     <div class="header">
-      <h1>ลงทะเบียนพนักงาน</h1>
-      <p>กรอกข้อมูลเพื่อเข้าใช้ระบบลงเวลาทำงาน</p>
+      <h1 class="title">ลงทะเบียนพนักงาน</h1>
+      <div class="subtitle">กรุณากรอกข้อมูลให้ครบถ้วน</div>
     </div>
     
-    <div class="form-container">
-      <div class="user-info" id="userInfo" style="display: none;">
-        <div class="user-avatar" id="userAvatar"></div>
-        <div class="user-name" id="userName"></div>
-        <div class="user-id" id="userId"></div>
+    <div class="cors-info">
+      ✨ ใช้เทคนิค text/plain - ไม่มี CORS Error
+    </div>
+    
+    <form id="registerForm">
+      <div class="form-group">
+        <label class="form-label" for="name">ชื่อ-นามสกุล *</label>
+        <input type="text" id="name" class="form-input" placeholder="กรอกชื่อ-นามสกุล" required>
+        <div class="error-message" id="nameError"></div>
       </div>
       
-      <form id="registerForm">
-        <div class="form-group">
-          <label class="form-label required" for="name">ชื่อ - นามสกุล</label>
-          <input type="text" id="name" class="form-input" placeholder="กรอกชื่อ-นามสกุลของคุณ" maxlength="50" required>
-          <div class="field-hint">ชื่อที่ใช้ในการติดต่อและรายงาน</div>
-          <div class="field-error" id="nameError"></div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label required" for="plate">ทะเบียนรถ</label>
-          <input type="text" id="plate" class="form-input" placeholder="เช่น 1กข1234 หรือ Bangkok 1234" maxlength="10" required>
-          <div class="field-hint">หมายเลขทะเบียนรถที่ใช้ในการทำงาน</div>
-          <div class="field-error" id="plateError"></div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label required" for="phone">เบอร์ติดต่อ</label>
-          <input type="tel" id="phone" class="form-input" placeholder="0812345678" maxlength="10" required>
-          <div class="field-hint">เบอร์โทรศัพท์ที่สามารถติดต่อได้</div>
-          <div class="field-error" id="phoneError"></div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label required" for="branch">สาขา</label>
-          <select id="branch" class="form-select" required>
-            <option value="">-- เลือกสาขา --</option>
-            <option value="สาขาหลัก">สาขาหลัก</option>
-            <option value="สาขาลาดพร้าว">สาขาลาดพร้าว</option>
-            <option value="สาขารัชดาภิเษก">สาขารัชดาภิเษก</option>
-            <option value="สาขาบางนา">สาขาบางนา</option>
-            <option value="สาขาสีลม">สาขาสีลม</option>
-            <option value="สาขาอื่นๆ">สาขาอื่นๆ</option>
-          </select>
-          <div class="field-hint">เลือกสาขาที่คุณสังกัด</div>
-          <div class="field-error" id="branchError"></div>
-        </div>
-        
-        <button type="submit" class="submit-btn" id="submitBtn">
-          ลงทะเบียน
-        </button>
-      </form>
+      <div class="form-group">
+        <label class="form-label" for="phone">เบอร์โทรศัพท์ *</label>
+        <input type="tel" id="phone" class="form-input" placeholder="กรอกเบอร์โทรศัพท์" required>
+        <div class="error-message" id="phoneError"></div>
+      </div>
       
-      <div id="message" style="display: none;"></div>
-    </div>
-    
-    <div class="footer">
-      <div>ระบบลงเวลาทำงาน BigC Delivery Service</div>
-      <div>Powered by LINE LIFF • Version 2.0</div>
-    </div>
+      <div class="form-group">
+        <label class="form-label" for="plate">ทะเบียนรถ *</label>
+        <input type="text" id="plate" class="form-input" placeholder="กรอกทะเบียนรถ" required>
+        <div class="error-message" id="plateError"></div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary" id="submitBtn">ลงทะเบียน</button>
+      <button type="button" class="btn btn-secondary" onclick="history.back()">ยกเลิก</button>
+    </form>
   </div>
 
-  <!-- Scripts -->
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <script src="./config.js"></script>
+  <script src="config-v3.js"></script>
   
   <script>
-    let userProfile = null;
-    let isSubmitting = false;
+    let liffReady = false;
     
-    /**
-     * Show message to user
-     */
-    function showMessage(text, type = 'info') {
-      const messageDiv = document.getElementById('message');
-      messageDiv.style.display = 'block';
-      messageDiv.textContent = text;
-      messageDiv.className = `message message-${type}`;
-      
-      // Auto hide success messages
-      if (type === 'success') {
-        setTimeout(() => {
-          messageDiv.style.display = 'none';
-        }, 3000);
-      }
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePage();
+      setupFormValidation();
+    });
     
-    /**
-     * Show field error
-     */
-    function showFieldError(fieldId, message) {
-      const field = document.getElementById(fieldId);
-      const errorDiv = document.getElementById(fieldId + 'Error');
-      
-      if (field && errorDiv) {
-        field.classList.add('error');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
-      }
-    }
-    
-    /**
-     * Clear field error
-     */
-    function clearFieldError(fieldId) {
-      const field = document.getElementById(fieldId);
-      const errorDiv = document.getElementById(fieldId + 'Error');
-      
-      if (field && errorDiv) {
-        field.classList.remove('error');
-        errorDiv.style.display = 'none';
-      }
-    }
-    
-    /**
-     * Clear all field errors
-     */
-    function clearAllFieldErrors() {
-      const fields = ['name', 'plate', 'phone', 'branch'];
-      fields.forEach(fieldId => clearFieldError(fieldId));
-    }
-    
-    /**
-     * Validate individual field
-     */
-    function validateField(fieldId, value) {
-      try {
-        switch (fieldId) {
-          case 'name':
-            return InputValidator.validateName(value);
-          case 'plate':
-            return InputValidator.validatePlate(value);
-          case 'phone':
-            return InputValidator.validatePhone(value);
-          case 'branch':
-            return InputValidator.validateBranch(value);
-          default:
-            return value;
-        }
-      } catch (error) {
-        showFieldError(fieldId, error.message);
-        throw error;
-      }
-    }
-    
-    /**
-     * Setup real-time field validation
-     */
-    function setupFieldValidation() {
-      const fields = ['name', 'plate', 'phone', 'branch'];
-      
-      fields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (field) {
-          // Clear error on focus
-          field.addEventListener('focus', () => {
-            clearFieldError(fieldId);
-          });
-          
-          // Validate on blur
-          field.addEventListener('blur', () => {
-            if (field.value.trim()) {
-              try {
-                validateField(fieldId, field.value.trim());
-                clearFieldError(fieldId);
-              } catch (error) {
-                // Error already shown in validateField
-              }
-            }
-          });
-          
-          // Format phone number on input
-          if (fieldId === 'phone') {
-            field.addEventListener('input', (e) => {
-              // Remove non-digits
-              let value = e.target.value.replace(/\D/g, '');
-              // Limit to 10 digits
-              if (value.length > 10) {
-                value = value.substring(0, 10);
-              }
-              e.target.value = value;
-            });
-          }
-        }
-      });
-    }
-    
-    /**
-     * Setup form submission
-     */
-    function setupFormSubmission() {
-      const form = document.getElementById('registerForm');
-      const submitBtn = document.getElementById('submitBtn');
-      
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        if (isSubmitting) return;
-        
-        try {
-          isSubmitting = true;
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'กำลังลงทะเบียน...';
-          
-          clearAllFieldErrors();
-          
-          // Get form data
-          const formData = {
-            name: document.getElementById('name').value.trim(),
-            plate: document.getElementById('plate').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
-            branch: document.getElementById('branch').value.trim()
-          };
-          
-          // Validate all fields
-          const validatedData = {};
-          for (const [key, value] of Object.entries(formData)) {
-            validatedData[key] = validateField(key, value);
-          }
-          
-          // Prepare data for backend
-          const employeeData = {
-            userId: userProfile.userId,
-            'ชื่อ - นามสกุล': validatedData.name,
-            'ทะเบียนรถ': validatedData.plate,
-            'เบอร์ติดต่อ': validatedData.phone,
-            'สาขา': validatedData.branch
-          };
-          
-          // Submit to backend
-          const response = await ApiClient.serverCall('registerEmployee', [employeeData]);
-          
-          if (response.status === 'exists') {
-            showMessage('พนักงานมีในระบบแล้ว กำลังนำทางไปหน้าถัดไป...', 'info');
-          } else {
-            showMessage('ลงทะเบียนสำเร็จ! กำลังนำทางไปหน้าถัดไป...', 'success');
-          }
-          
-          // Navigate after successful registration
-          setTimeout(() => {
-            if (liff.isInClient()) {
-              liff.closeWindow();
-            } else {
-              window.location.href = './start-improved.html';
-            }
-          }, 2000);
-          
-        } catch (error) {
-          console.error('Registration error:', error);
-          
-          if (error.message.includes('ชื่อ') || error.message.includes('name')) {
-            showFieldError('name', error.message);
-          } else if (error.message.includes('ทะเบียน') || error.message.includes('plate')) {
-            showFieldError('plate', error.message);
-          } else if (error.message.includes('เบอร์') || error.message.includes('phone')) {
-            showFieldError('phone', error.message);
-          } else if (error.message.includes('สาขา') || error.message.includes('branch')) {
-            showFieldError('branch', error.message);
-          } else {
-            showMessage('เกิดข้อผิดพลาด: ' + error.message, 'error');
-          }
-          
-        } finally {
-          isSubmitting = false;
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'ลงทะเบียน';
-        }
-      });
-    }
-    
-    /**
-     * Initialize the page
-     */
     async function initializePage() {
       try {
-        // Get user profile
-        userProfile = await LIFFUtils.initializeAndGetProfile();
-        
-        if (!userProfile) {
-          return; // User will be redirected to login
+        if (typeof liff !== 'undefined') {
+          await liff.init({ liffId: CONFIG.LIFF_ID });
+          liffReady = true;
+          console.log('✅ LIFF ready for registration');
         }
-        
-        // Display user info
-        const userInfo = document.getElementById('userInfo');
-        const userAvatar = document.getElementById('userAvatar');
-        const userName = document.getElementById('userName');
-        const userId = document.getElementById('userId');
-        
-        userAvatar.textContent = userProfile.displayName.charAt(0);
-        userName.textContent = userProfile.displayName;
-        userId.textContent = `ID: ${userProfile.userId.substring(0, 8)}...`;
-        userInfo.style.display = 'block';
-        
-        // Pre-fill name field with LINE display name
-        document.getElementById('name').value = userProfile.displayName;
-        
-        // Setup form validation and submission
-        setupFieldValidation();
-        setupFormSubmission();
-        
-        showMessage('กรอกข้อมูลด้านล่างเพื่อลงทะเบียนเข้าใช้ระบบ', 'info');
-        
       } catch (error) {
-        console.error('Initialization error:', error);
-        showMessage('เกิดข้อผิดพลาดในการเตรียมระบบ: ' + error.message, 'error');
+        console.warn('⚠️ LIFF initialization failed:', error);
       }
     }
     
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', initializePage);
+    function setupFormValidation() {
+      const form = document.getElementById('registerForm');
+      const inputs = form.querySelectorAll('.form-input');
+      
+      // Real-time validation
+      inputs.forEach(input => {
+        input.addEventListener('blur', validateField);
+        input.addEventListener('input', clearError);
+      });
+      
+      // Form submission
+      form.addEventListener('submit', handleSubmit);
+    }
+    
+    function validateField(e) {
+      const field = e.target;
+      const value = field.value.trim();
+      let error = null;
+      
+      switch (field.id) {
+        case 'name':
+          error = InputValidator.validateName(value);
+          break;
+        case 'phone':
+          error = InputValidator.validatePhone(value);
+          break;
+        case 'plate':
+          error = InputValidator.validatePlate(value);
+          break;
+      }
+      
+      showFieldError(field.id, error);
+      return !error;
+    }
+    
+    function clearError(e) {
+      const field = e.target;
+      showFieldError(field.id, null);
+    }
+    
+    function showFieldError(fieldId, error) {
+      const field = document.getElementById(fieldId);
+      const errorElement = document.getElementById(fieldId + 'Error');
+      
+      if (error) {
+        field.classList.add('error');
+        errorElement.textContent = error;
+        errorElement.style.display = 'block';
+      } else {
+        field.classList.remove('error');
+        errorElement.style.display = 'none';
+      }
+    }
+    
+    function validateForm() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const plate = document.getElementById('plate').value.trim();
+      
+      const nameError = InputValidator.validateName(name);
+      const phoneError = InputValidator.validatePhone(phone);
+      const plateError = InputValidator.validatePlate(plate);
+      
+      showFieldError('name', nameError);
+      showFieldError('phone', phoneError);
+      showFieldError('plate', plateError);
+      
+      return !nameError && !phoneError && !plateError;
+    }
+    
+    async function handleSubmit(e) {
+      e.preventDefault();
+      
+      if (!validateForm()) {
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const plate = document.getElementById('plate').value.trim();
+      
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'กำลังลงทะเบียน...';
+        
+        showLoading('กำลังลงทะเบียน...');
+        
+        console.log('📝 Registering employee (CORS-free):', { name, phone, plate });
+        
+        // 🎯 ใช้ serverCall function ที่มีเทคนิค text/plain
+        const result = await serverCall('registerEmployee', name, phone, plate);
+        
+        hideLoading();
+        
+        console.log('✅ Registration result:', result);
+        
+        if (result.employeeExists) {
+          alert('ข้อมูลนี้ได้ลงทะเบียนแล้ว\n' + result.message);
+        } else {
+          alert('ลงทะเบียนสำเร็จ! 🎉\n' + result.message);
+        }
+        
+        // Redirect to start work page
+        setTimeout(() => {
+          window.location.href = 'start-v3.html';
+        }, 1500);
+        
+      } catch (error) {
+        hideLoading();
+        console.error('❌ Registration failed:', error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
+        
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ลงทะเบียน';
+      }
+    }
   </script>
 </body>
 </html>
