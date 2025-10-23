@@ -3,301 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ลงเวลาเริ่มงาน - BigC</title>
+  <title>ลงเวลาเริ่มงาน - BigC v3</title>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Kanit', sans-serif;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-    
-    .header {
-      background: linear-gradient(135deg, #06C755 0%, #04b049 100%);
-      padding: 30px;
-      text-align: center;
-      color: white;
-    }
-    
-    .header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    
-    .header .time {
-      font-size: 18px;
-      opacity: 0.9;
-    }
-    
-    .form-container {
-      padding: 40px 30px;
-    }
-    
-    .employee-info {
-      background: linear-gradient(135deg, #f8f9ff, #e6f3ff);
-      border: 1px solid #cce7ff;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-    
-    .employee-info h3 {
-      color: #2d3748;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-    
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    
-    .info-item {
-      background: white;
-      padding: 15px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Kanit', sans-serif; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 100vh; padding: 20px; }
+    .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); overflow: hidden; }
+    .header { background: linear-gradient(135deg, #06C755 0%, #04b049 100%); padding: 30px; text-align: center; color: white; }
+    .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+    .header .time { font-size: 18px; opacity: 0.9; }
+    .form-container { padding: 40px 30px; }
+    .employee-info { background: linear-gradient(135deg, #f8f9ff, #e6f3ff); border: 1px solid #cce7ff; border-radius: 15px; padding: 20px; margin-bottom: 30px; }
+    .employee-info h3 { color: #2d3748; margin-bottom: 10px; font-size: 18px; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+    .info-item { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+    .info-label { font-size: 12px; color: #718096; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .info-value { font-size: 16px; font-weight: 600; color: #2d3748; }
+    .form-group { margin-bottom: 30px; }
+    .form-label { display: block; font-size: 16px; font-weight: 600; color: #2d3748; margin-bottom: 10px; }
+    .form-label.required::after { content: ' *'; color: #e53e3e; }
+    .form-input { width: 100%; padding: 14px 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-family: 'Kanit', sans-serif; transition: all 0.3s ease; background: white; }
+    .form-input:focus { outline: none; border-color: #06C755; box-shadow: 0 0 0 3px rgba(6, 199, 85, 0.1); }
+    .form-input.error { border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1); }
+    .photo-upload { border: 3px dashed #cbd5e0; border-radius: 15px; padding: 30px 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; background: #f7fafc; position: relative; overflow: hidden; }
+    .photo-upload:hover { border-color: #06C755; background: #f0fff4; }
+    .photo-upload.has-image { border-style: solid; border-color: #06C755; background: #f0fff4; }
+    .upload-icon { font-size: 48px; color: #a0aec0; margin-bottom: 15px; }
+    .upload-text { font-size: 16px; font-weight: 500; color: #4a5568; margin-bottom: 8px; }
+    .upload-hint { font-size: 13px; color: #718096; }
+    .photo-preview { max-width: 100%; max-height: 200px; border-radius: 10px; margin-top: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+    .hidden-input { display: none; }
+    .field-error { font-size: 14px; color: #e53e3e; margin-top: 8px; display: none; }
+    .field-hint { font-size: 13px; color: #718096; margin-top: 5px; }
+    .submit-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #06C755, #04b049); color: white; border: none; border-radius: 15px; font-size: 18px; font-weight: 700; font-family: 'Kanit', sans-serif; cursor: pointer; transition: all 0.3s ease; margin-top: 30px; }
+    .submit-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(6, 199, 85, 0.3); }
+    .submit-btn:disabled { background: #cbd5e0; cursor: not-allowed; transform: none; box-shadow: none; }
+    .message { padding: 15px; border-radius: 10px; margin-top: 20px; font-weight: 500; text-align: center; }
+    .message-success { background: #f0fff4; border: 1px solid #9ae6b4; color: #22543d; }
+    .message-error { background: #fed7d7; border: 1px solid #feb2b2; color: #c53030; }
+    .message-info { background: #ebf8ff; border: 1px solid #90cdf4; color: #2a69ac; }
+    .countdown { background: #fef5e7; border: 1px solid #f6e05e; color: #744210; }
+    .footer { text-align: center; padding: 20px; font-size: 12px; color: #a0aec0; background: #f7fafc; }
+    .cors-info {
+      background: #e8f5e8;
+      border: 1px solid #27ae60;
+      padding: 10px 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-    
-    .info-label {
-      font-size: 12px;
-      color: #718096;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .info-value {
-      font-size: 16px;
-      font-weight: 600;
-      color: #2d3748;
-    }
-    
-    .form-group {
-      margin-bottom: 30px;
-    }
-    
-    .form-label {
-      display: block;
-      font-size: 16px;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 10px;
-    }
-    
-    .form-label.required::after {
-      content: ' *';
-      color: #e53e3e;
-    }
-    
-    .form-input {
-      width: 100%;
-      padding: 14px 18px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 16px;
-      font-family: 'Kanit', sans-serif;
-      transition: all 0.3s ease;
-      background: white;
-    }
-    
-    .form-input:focus {
-      outline: none;
-      border-color: #06C755;
-      box-shadow: 0 0 0 3px rgba(6, 199, 85, 0.1);
-    }
-    
-    .form-input.error {
-      border-color: #e53e3e;
-      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
-    }
-    
-    .photo-upload {
-      border: 3px dashed #cbd5e0;
-      border-radius: 15px;
-      padding: 30px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: #f7fafc;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .photo-upload:hover {
-      border-color: #06C755;
-      background: #f0fff4;
-    }
-    
-    .photo-upload.has-image {
-      border-style: solid;
-      border-color: #06C755;
-      background: #f0fff4;
-    }
-    
-    .upload-icon {
-      font-size: 48px;
-      color: #a0aec0;
-      margin-bottom: 15px;
-    }
-    
-    .upload-text {
-      font-size: 16px;
-      font-weight: 500;
-      color: #4a5568;
-      margin-bottom: 8px;
-    }
-    
-    .upload-hint {
-      font-size: 13px;
-      color: #718096;
-    }
-    
-    .photo-preview {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 10px;
-      margin-top: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    
-    .hidden-input {
-      display: none;
-    }
-    
-    .field-error {
+      margin: -20px 0 25px 0;
       font-size: 14px;
-      color: #e53e3e;
-      margin-top: 8px;
-      display: none;
-    }
-    
-    .field-hint {
-      font-size: 13px;
-      color: #718096;
-      margin-top: 5px;
-    }
-    
-    .submit-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #06C755, #04b049);
-      color: white;
-      border: none;
-      border-radius: 15px;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: 'Kanit', sans-serif;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 30px;
-    }
-    
-    .submit-btn:hover:not(:disabled) {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(6, 199, 85, 0.3);
-    }
-    
-    .submit-btn:disabled {
-      background: #cbd5e0;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    .message {
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
+      color: #155724;
+      text-align: center;
       font-weight: 500;
     }
-    
-    .message-success {
-      background: #f0fff4;
-      border: 1px solid #9ae6b4;
-      color: #22543d;
-    }
-    
-    .message-error {
-      background: #fed7d7;
-      border: 1px solid #feb2b2;
-      color: #c53030;
-    }
-    
-    .message-info {
-      background: #ebf8ff;
-      border: 1px solid #90cdf4;
-      color: #2a69ac;
-    }
-    
-    .countdown {
-      background: #fef5e7;
-      border: 1px solid #f6e05e;
-      color: #744210;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-    }
-    
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: #a0aec0;
-      background: #f7fafc;
-    }
-    
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      
-      .container {
-        border-radius: 15px;
-      }
-      
-      .header {
-        padding: 25px 20px;
-      }
-      
-      .header h1 {
-        font-size: 24px;
-      }
-      
-      .form-container {
-        padding: 30px 20px;
-      }
-      
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .upload-icon {
-        font-size: 36px;
-      }
-      
-      .upload-text {
-        font-size: 14px;
-      }
-    }
+    @media (max-width: 600px) { body { padding: 10px; } .container { border-radius: 15px; } .header { padding: 25px 20px; } .header h1 { font-size: 24px; } .form-container { padding: 30px 20px; } .info-grid { grid-template-columns: 1fr; } .upload-icon { font-size: 36px; } .upload-text { font-size: 14px; } }
   </style>
 </head>
 <body>
@@ -308,29 +66,21 @@
     </div>
     
     <div class="form-container">
+      <div class="cors-info">
+        ✨ ใช้เทคนิค text/plain - ไม่มี CORS Error
+      </div>
+
       <div class="employee-info" id="employeeInfo" style="display: none;">
         <h3>ข้อมูลพนักงาน</h3>
         <div class="info-grid">
-          <div class="info-item">
-            <div class="info-label">ชื่อ - นามสกุล</div>
-            <div class="info-value" id="empName"></div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">ทะเบียนรถ</div>
-            <div class="info-value" id="empPlate"></div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">เบอร์ติดต่อ</div>
-            <div class="info-value" id="empPhone"></div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">สาขา</div>
-            <div class="info-value" id="empBranch"></div>
-          </div>
+          <div class="info-item"><div class="info-label">ชื่อ - นามสกุล</div><div class="info-value" id="empName"></div></div>
+          <div class="info-item"><div class="info-label">ทะเบียนรถ</div><div class="info-value" id="empPlate"></div></div>
+          <div class="info-item"><div class="info-label">เบอร์ติดต่อ</div><div class="info-value" id="empPhone"></div></div>
+          <div class="info-item"><div class="info-label">สาขา</div><div class="info-value" id="empBranch"></div></div>
         </div>
       </div>
       
-      <form id="startWorkForm">
+      <form id="startWorkForm" novalidate>
         <div class="form-group">
           <label class="form-label required" for="startTime">เวลาเริ่มงาน</label>
           <input type="time" id="startTime" class="form-input" required>
@@ -341,18 +91,14 @@
         <div class="form-group">
           <label class="form-label required" for="startMileage">เลขไมล์เริ่มงาน</label>
           <input type="number" id="startMileage" class="form-input" placeholder="123456.7" step="0.1" min="0" required>
-          <div class="field-hint">กรอกเลขไมล์ที่แสดงในมาตรวัดรถ (สามารถใส่จุดทศนิยมได้)</div>
+          <div class="field-hint">กรอกเลขไมล์ที่แสดงในมาตรวัดรถ</div>
           <div class="field-error" id="startMileageError"></div>
         </div>
         
         <div class="form-group">
           <label class="form-label required">รูปภาพเลขไมล์เริ่มงาน</label>
           <div class="photo-upload" onclick="document.getElementById('startMileagePhoto').click()">
-            <div class="upload-content">
-              <div class="upload-icon">📷</div>
-              <div class="upload-text">ถ่าย/เลือกรูปเลขไมล์</div>
-              <div class="upload-hint">แตะเพื่อถ่ายรูปหรือเลือกจากแกลเลอรี</div>
-            </div>
+            <div class="upload-content"><div class="upload-icon">📷</div><div class="upload-text">ถ่าย/เลือกรูปเลขไมล์</div><div class="upload-hint">แตะเพื่อถ่ายรูปหรือเลือกจากแกลเลอรี</div></div>
             <input type="file" id="startMileagePhoto" class="hidden-input" accept="image/*" capture="environment" required>
             <img id="startMileagePreview" class="photo-preview" style="display: none">
           </div>
@@ -362,20 +108,14 @@
         <div class="form-group">
           <label class="form-label required">รูปภาพพนักงานเริ่มงาน</label>
           <div class="photo-upload" onclick="document.getElementById('startEmployeePhoto').click()">
-            <div class="upload-content">
-              <div class="upload-icon">🤳</div>
-              <div class="upload-text">ถ่าย/เลือกรูปพนักงาน</div>
-              <div class="upload-hint">ถ่ายรูปตัวเองพร้อมรถหรือในพื้นที่ทำงาน</div>
-            </div>
+            <div class="upload-content"><div class="upload-icon">🤳</div><div class="upload-text">ถ่าย/เลือกรูปพนักงาน</div><div class="upload-hint">ถ่ายรูปตัวเองพร้อมรถ</div></div>
             <input type="file" id="startEmployeePhoto" class="hidden-input" accept="image/*" capture="user" required>
             <img id="startEmployeePreview" class="photo-preview" style="display: none">
           </div>
           <div class="field-error" id="startEmployeePhotoError"></div>
         </div>
         
-        <button type="submit" class="submit-btn" id="submitBtn">
-          บันทึกข้อมูลเริ่มงาน
-        </button>
+        <button type="submit" class="submit-btn" id="submitBtn">บันทึกข้อมูลเริ่มงาน</button>
       </form>
       
       <div id="message" style="display: none;"></div>
@@ -383,49 +123,17 @@
     
     <div class="footer">
       <div>ระบบลงเวลาทำงาน BigC Delivery Service</div>
-      <div>Powered by LINE LIFF • Version 2.0</div>
+      <div>Powered by LINE LIFF • Version 3.0 (CORS-Free)</div>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <script src="./config.js"></script>
+  <script src="config-v3.js"></script>
   
   <script>
     let userProfile = null;
-    let employeeData = null;
     let isSubmitting = false;
     
-    /**
-     * Update current time display
-     */
-    function updateCurrentTime() {
-      const now = new Date();
-      const timeString = now.toLocaleString('th-TH', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-      
-      document.getElementById('currentTime').textContent = timeString;
-    }
-    
-    /**
-     * Set current time as default
-     */
-    function setDefaultTime() {
-      const now = new Date();
-      const timeString = now.toTimeString().substring(0, 5); // HH:MM format
-      document.getElementById('startTime').value = timeString;
-    }
-    
-    /**
-     * Show message to user
-     */
     function showMessage(text, type = 'info') {
       const messageDiv = document.getElementById('message');
       messageDiv.style.display = 'block';
@@ -433,44 +141,24 @@
       messageDiv.className = `message message-${type}`;
     }
     
-    /**
-     * Show field error
-     */
     function showFieldError(fieldId, message) {
-      const field = document.getElementById(fieldId);
+      document.getElementById(fieldId).classList.add('error');
       const errorDiv = document.getElementById(fieldId + 'Error');
-      
-      if (field && errorDiv) {
-        field.classList.add('error');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
-      }
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
     }
     
-    /**
-     * Clear field error
-     */
     function clearFieldError(fieldId) {
       const field = document.getElementById(fieldId);
+      if (field) field.classList.remove('error');
       const errorDiv = document.getElementById(fieldId + 'Error');
-      
-      if (field && errorDiv) {
-        field.classList.remove('error');
-        errorDiv.style.display = 'none';
-      }
+      if (errorDiv) errorDiv.style.display = 'none';
     }
     
-    /**
-     * Clear all field errors
-     */
     function clearAllFieldErrors() {
-      const fields = ['startTime', 'startMileage', 'startMileagePhoto', 'startEmployeePhoto'];
-      fields.forEach(fieldId => clearFieldError(fieldId));
+      ['startTime', 'startMileage', 'startMileagePhoto', 'startEmployeePhoto'].forEach(clearFieldError);
     }
-    
-    /**
-     * Setup photo preview
-     */
+
     function setupPhotoPreview(inputId, previewId) {
       const input = document.getElementById(inputId);
       const preview = document.getElementById(previewId);
@@ -478,25 +166,19 @@
       
       input.addEventListener('change', async (e) => {
         const file = e.target.files[0];
-        
         if (!file) {
           preview.style.display = 'none';
           uploadContainer.classList.remove('has-image');
-          clearFieldError(inputId);
           return;
         }
         
         try {
-          // Validate image
           InputValidator.validateImage(file);
-          
-          // Read and display preview
           const base64 = await FileHandler.readFileAsBase64(file);
           preview.src = base64;
           preview.style.display = 'block';
           uploadContainer.classList.add('has-image');
           clearFieldError(inputId);
-          
         } catch (error) {
           showFieldError(inputId, error.message);
           input.value = '';
@@ -506,138 +188,69 @@
       });
     }
     
-    /**
-     * Setup real-time validation
-     */
-    function setupValidation() {
-      // Time validation
-      const startTimeInput = document.getElementById('startTime');
-      startTimeInput.addEventListener('blur', () => {
-        if (startTimeInput.value) {
-          try {
-            InputValidator.validateTime(startTimeInput.value);
-            clearFieldError('startTime');
-          } catch (error) {
-            showFieldError('startTime', error.message);
-          }
-        }
-      });
-      
-      // Mileage validation
-      const mileageInput = document.getElementById('startMileage');
-      mileageInput.addEventListener('blur', () => {
-        if (mileageInput.value) {
-          try {
-            InputValidator.validateMileage(mileageInput.value);
-            clearFieldError('startMileage');
-          } catch (error) {
-            showFieldError('startMileage', error.message);
-          }
-        }
-      });
-      
-      // Photo previews
-      setupPhotoPreview('startMileagePhoto', 'startMileagePreview');
-      setupPhotoPreview('startEmployeePhoto', 'startEmployeePreview');
-    }
-    
-    /**
-     * Setup form submission
-     */
     function setupFormSubmission() {
       const form = document.getElementById('startWorkForm');
       const submitBtn = document.getElementById('submitBtn');
       
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         if (isSubmitting) return;
+
+        isSubmitting = true;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'กำลังบันทึก...';
         
         try {
-          isSubmitting = true;
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'กำลังบันทึกข้อมูล...';
-          
           clearAllFieldErrors();
           
-          // Get form data
           const startTime = document.getElementById('startTime').value;
           const startMileage = document.getElementById('startMileage').value;
-          const mileagePhoto = document.getElementById('startMileagePhoto').files[0];
-          const employeePhoto = document.getElementById('startEmployeePhoto').files[0];
+          const mileagePhotoFile = document.getElementById('startMileagePhoto').files[0];
+          const employeePhotoFile = document.getElementById('startEmployeePhoto').files[0];
+
+          let isValid = true;
+          try { InputValidator.validateTime(startTime); } 
+          catch (err) { showFieldError('startTime', err.message); isValid = false; }
           
-          // Validate required fields
-          if (!startTime) throw new Error('กรุณาเลือกเวลาเริ่มงาน');
-          if (!startMileage) throw new Error('กรุณากรอกเลขไมล์เริ่มงาน');
-          if (!mileagePhoto) throw new Error('กรุณาถ่ายรูปเลขไมล์');
-          if (!employeePhoto) throw new Error('กรุณาถ่ายรูปพนักงาน');
+          try { InputValidator.validateMileage(startMileage); }
+          catch (err) { showFieldError('startMileage', err.message); isValid = false; }
+
+          try { InputValidator.validateImage(mileagePhotoFile); }
+          catch (err) { showFieldError('startMileagePhoto', err.message); isValid = false; }
+
+          try { InputValidator.validateImage(employeePhotoFile); }
+          catch (err) { showFieldError('startEmployeePhoto', err.message); isValid = false; }
           
-          // Validate individual fields
-          const validatedTime = InputValidator.validateTime(startTime);
-          const validatedMileage = InputValidator.validateMileage(startMileage);
+          if (!isValid) throw new Error("ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบ");
+
+          const [mileagePhoto, employeePhoto] = await Promise.all([
+              FileHandler.readFileAsBase64(mileagePhotoFile),
+              FileHandler.readFileAsBase64(employeePhotoFile)
+          ]);
           
-          // Convert photos to base64
-          showMessage('กำลังประมวลผลรูปภาพ...', 'info');
-          const mileageBase64 = await FileHandler.readFileAsBase64(mileagePhoto);
-          const employeeBase64 = await FileHandler.readFileAsBase64(employeePhoto);
-          
-          if (!mileageBase64) throw new Error('ไม่สามารถอ่านรูปเลขไมล์ได้');
-          if (!employeeBase64) throw new Error('ไม่สามารถอ่านรูปพนักงานได้');
-          
-          // Prepare payload
           const payload = {
             userId: userProfile.userId,
-            startTime: validatedTime,
-            startMileage: validatedMileage,
-            startMileagePhoto: mileageBase64,
-            startEmployeePhoto: employeeBase64
+            startTime,
+            startMileage,
+            startMileagePhoto: mileagePhoto,
+            startEmployeePhoto: employeePhoto
           };
           
-          // Submit to backend
-          showMessage('กำลังส่งข้อมูลไปยังเซิร์ฟเวอร์...', 'info');
-          const response = await ApiClient.serverCall('saveStartWork', [payload]);
+          const response = await serverCall('saveStartWork', payload);
           
-          if (response.status === 'error') {
-            throw new Error(response.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล');
-          }
-          
-          // Success
-          showMessage('บันทึกข้อมูลเริ่มงานเรียบร้อย! 🎉', 'success');
-          
-          // Show countdown and close
+          submitBtn.disabled = true;
           let countdown = 5;
-          const countdownInterval = setInterval(() => {
-            showMessage(`บันทึกเรียบร้อย! ปิดหน้าต่างใน ${countdown} วินาที...`, 'countdown');
-            countdown--;
-            
+          const interval = setInterval(() => {
+            showMessage(`บันทึกเรียบร้อย! ปิดหน้านี้ใน ${countdown--} วินาที...`, 'countdown');
             if (countdown < 0) {
-              clearInterval(countdownInterval);
-              
-              if (liff.isInClient()) {
-                liff.closeWindow();
-              } else {
-                window.location.href = './end-improved.html';
-              }
+              clearInterval(interval);
+              if (liff.isInClient()) liff.closeWindow();
             }
           }, 1000);
           
         } catch (error) {
-          console.error('Start work submission error:', error);
-          
-          // Handle specific validation errors
-          if (error.message.includes('เวลา') || error.message.includes('time')) {
-            showFieldError('startTime', error.message);
-          } else if (error.message.includes('ไมล์') || error.message.includes('mileage')) {
-            showFieldError('startMileage', error.message);
-          } else if (error.message.includes('รูปเลขไมล์') || error.message.includes('mileage photo')) {
-            showFieldError('startMileagePhoto', error.message);
-          } else if (error.message.includes('รูปพนักงาน') || error.message.includes('employee photo')) {
-            showFieldError('startEmployeePhoto', error.message);
-          } else {
-            showMessage('เกิดข้อผิดพลาด: ' + error.message, 'error');
-          }
-          
-        } finally {
+          console.error('Submission error:', error);
+          showMessage('เกิดข้อผิดพลาด: ' + error.message, 'error');
           isSubmitting = false;
           submitBtn.disabled = false;
           submitBtn.textContent = 'บันทึกข้อมูลเริ่มงาน';
@@ -645,62 +258,50 @@
       });
     }
     
-    /**
-     * Initialize the page
-     */
     async function initializePage() {
+      const timeElement = document.getElementById('currentTime');
+      const updateTime = () => timeElement.textContent = new Date().toLocaleString('th-TH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'});
+      updateTime();
+      setInterval(updateTime, 1000);
+      document.getElementById('startTime').value = new Date().toTimeString().substring(0, 5);
+      
       try {
-        // Start time updates
-        updateCurrentTime();
-        setInterval(updateCurrentTime, 1000);
-        setDefaultTime();
-        
-        // Get user profile
-        userProfile = await LIFFUtils.initializeAndGetProfile();
+        userProfile = await initializeLiffAndGetProfile();
         if (!userProfile) return;
         
-        // Check work state
-        const workState = await ApiClient.serverCall('getWorkStateForToday', [userProfile.userId]);
+        const workState = await serverCall('getWorkStateForToday', userProfile.userId);
         
         if (workState.status === 'NO_EMP') {
-          showMessage('ยังไม่ได้ลงทะเบียน กำลังนำทางไปหน้าลงทะเบียน...', 'error');
-          setTimeout(() => {
-            window.location.href = './register-improved.html';
-          }, 2000);
+          showMessage('ยังไม่ได้ลงทะเบียน กำลังนำทาง...', 'error');
+          setTimeout(() => window.location.href = './register-v3.html', 2000);
           return;
         }
         
         if (workState.status !== 'NOT_STARTED') {
-          showMessage('ไม่สามารถเริ่มงานได้ เนื่องจากได้เริ่มงานแล้วหรือเสร็จสิ้นแล้ว', 'error');
-          setTimeout(() => {
-            window.location.href = './end-improved.html';
-          }, 2000);
+          showMessage('คุณได้เริ่มงานหรือเลิกงานไปแล้วสำหรับวันนี้', 'error');
+          setTimeout(() => window.location.href = './end-v3.html', 2000);
           return;
         }
         
-        // Display employee data
-        employeeData = workState.employeeData;
-        if (employeeData) {
-          document.getElementById('empName').textContent = employeeData['ชื่อ - นามสกุล'] || 'ไม่ระบุ';
-          document.getElementById('empPlate').textContent = employeeData['ทะเบียนรถ'] || 'ไม่ระบุ';
-          document.getElementById('empPhone').textContent = employeeData['เบอร์ติดต่อ'] || 'ไม่ระบุ';
-          document.getElementById('empBranch').textContent = employeeData['สาขา'] || 'ไม่ระบุ';
-          document.getElementById('employeeInfo').style.display = 'block';
-        }
-        
-        // Setup form
-        setupValidation();
+        const employeeData = workState.employeeData;
+        document.getElementById('empName').textContent = employeeData['ชื่อ - นามสกุล'] || '-';
+        document.getElementById('empPlate').textContent = employeeData['ทะเบียนรถ'] || '-';
+        document.getElementById('empPhone').textContent = employeeData['เบอร์ติดต่อ'] || '-';
+        document.getElementById('empBranch').textContent = employeeData['สาขา'] || '-';
+        document.getElementById('employeeInfo').style.display = 'block';
+
+        setupPhotoPreview('startMileagePhoto', 'startMileagePreview');
+        setupPhotoPreview('startEmployeePhoto', 'startEmployeePreview');
         setupFormSubmission();
-        
-        showMessage('กรอกข้อมูลด้านล่างเพื่อลงเวลาเริ่มงาน', 'info');
-        
+        showMessage('กรอกข้อมูลเพื่อลงเวลาเริ่มงาน', 'info');
+
       } catch (error) {
         console.error('Initialization error:', error);
-        showMessage('เกิดข้อผิดพลาด: ' + error.message, 'error');
+        showMessage('เกิดข้อผิดพลาดร้ายแรง: ' + error.message, 'error');
+        document.getElementById('submitBtn').disabled = true;
       }
     }
     
-    // Initialize when page loads
     document.addEventListener('DOMContentLoaded', initializePage);
   </script>
 </body>
